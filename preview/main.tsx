@@ -29,7 +29,6 @@ function Preview() {
 const container = document.getElementById('root')
 if (!container) throw new Error('Missing preview root')
 
-const hot = import.meta.hot?.data as { root?: Root } | undefined
-const root = hot?.root ?? createRoot(container)
-if (hot) hot.root = root
+const hotState = import.meta.hot.data as { root?: Root }
+const root = (hotState.root ??= createRoot(container))
 root.render(<Preview />)
