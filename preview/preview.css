@@ -1,0 +1,15 @@
+.preview-page {
+  width: min(100% - 32px, 560px);
+  margin: 20px auto;
+}
+
+.preview-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-block-end: 24px;
+  color: CanvasText;
+  font: 12px system-ui, sans-serif;
+}
+
+.preview-controls select { margin-inline-start: 6px; }

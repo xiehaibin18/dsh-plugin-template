@@ -1,0 +1,30 @@
+{
+  "name": "dsh-example-settings",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A minimal settings plugin for DeepSeek Harness.",
+  "license": "MIT",
+  "packageManager": "bun@1.4.3-canary.20261021.1",
+  "engines": {
+    "node": ">=24.9.0",
+    "bun": "1.4.4-canary.1",
+    "dsh": "0.2.2-rc.3"
+  },
+  "scripts": {
+    "toolchain:check": "bun --no-env-file scripts/check-toolchain.ts",
+    "dev": "bun --no-env-file preview/server.ts",
+    "build": "bun --no-env-file scripts/build.ts",
+    "pack": "bun run build && cd dist && bun pm pack --destination ../artifacts",
+    "check": "bun run toolchain:check && bun check --no-script -p tsconfig.json && bun --no-env-file test --isolate && bun run build"
+  },
+  "devDependencies": {
+    "@base-ui/react": "1.9.0",
+    "@types/bun": "1.4.4",
+    "@types/react": "18.3.31",
+    "@types/react-dom": "18.3.7",
+    "@xiehaibin18/dsh-plugin-dev": "github:xiehaibin18/dsh-plugin-dev#42580c49f7da2cb627b921eb5970055bbf4dab80",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  }
+}
