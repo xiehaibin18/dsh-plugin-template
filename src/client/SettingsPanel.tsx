@@ -25,8 +25,11 @@ export function SettingsPanel({ t }: { t: Translate }) {
   const [status, setStatus] = useState<Status>('loading')
   const [attempt, setAttempt] = useState(0)
   const saveRequest = useRef<AbortController | null>(null)
+  const hasDraft = draft !== null
 
   useEffect(() => {
+    // React Refresh re-runs effects. Leave an already loaded draft in place.
+    if (hasDraft) return
     const loadRequest = new AbortController()
     void requestSettings(loadRequest.signal).then(
       (settings) => {
@@ -38,12 +41,13 @@ export function SettingsPanel({ t }: { t: Translate }) {
         if (!loadRequest.signal.aborted) setStatus('loadError')
       },
     )
-    return () => {
-      loadRequest.abort()
-      saveRequest.current?.abort()
-      saveRequest.current = null
-    }
-  }, [attempt])
+    return () => loadRequest.abort()
+  }, [attempt, hasDraft])
+
+  useEffect(() => () => {
+    saveRequest.current?.abort()
+    saveRequest.current = null
+  }, [])
 
   async function save(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
